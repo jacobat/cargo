@@ -1,0 +1,4 @@
+<tr style="<%= !container.running? ? "background: #fbb" : "" %>">
+<td><%= link_to container.name, container_path(container.short_id) %></td>
+<td><%= link_to 'Logs', container_log_path(container.short_id) %></td>
+</tr>

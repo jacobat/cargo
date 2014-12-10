@@ -1,0 +1,50 @@
+<h1 class="page-header"><%= @container.name %></h1>
+<p><%= link_to('Logs', container_log_path(@container.short_id)) %></p>
+<table>
+  <tr>
+    <td>ID</td>
+    <td><%= @container.short_id %></td>
+  </tr>
+  <tr>
+    <td>Running</td>
+    <td><%= @container.running? %></td>
+  </tr>
+  <tr>
+    <td>Ports</td>
+    <td>
+      <table>
+        <tr>
+          <th>Internal</th>
+          <th>External</th>
+        </tr>
+        <% @container.ports.each do |internal, external| %>
+          <tr>
+            <td>
+              <%= internal %>
+            </td>
+            <td>
+              <% if external %>
+                <%= external.map{ |portspec| portspec.values.join(':') }.join(' ') %>
+              <% else %>
+                  -
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<pre class="pre-scrollable">
+<% @container.info.each do |key, value| %>
+<%= key %>:
+<% if value.kind_of?(Hash) %>
+<% value.each do |nested_key, nested_value| %>
+  <%= "#{nested_key}: #{nested_value}" %>
+<% end %>
+<% else %>
+  <%= value %>
+<% end %>
+<% end %>
+</pre>

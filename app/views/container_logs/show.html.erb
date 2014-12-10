@@ -1,0 +1,8 @@
+<h1><%= @container.name %></h1>
+<p><%= link_to "Info", container_path(@container.short_id) %></p>
+<p><%= link_to "Scroll back", container_log_path(@container.short_id, limit: (params[:limit] || 50).to_i + 50) %>
+<div class="log_lines">
+<% format_logs(@container.logs, params[:limit].to_i).each do |log_line| %>
+  <p><%= log_line %></p>
+<% end %>
+</div>
