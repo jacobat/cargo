@@ -3,7 +3,6 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.11'
 
-
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.2'
 
@@ -16,12 +15,8 @@ gem 'coffee-rails', '~> 4.0.0'
 # gem 'therubyracer', platforms: :ruby
 
 gem 'byebug'
-
 gem 'bootstrap-sass', '~> 3.3.1'
-
 gem 'ansi2html', require: 'ansi2html/main'
-
-
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 1.2'
@@ -40,5 +35,9 @@ end
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
 
-# Use debugger
-# gem 'debugger', group: [:development, :test]
+gem 'minitest-reporters', group: [:test]
+
+group :development do
+  gem 'guard-minitest'
+  gem 'awesome_print'
+end
