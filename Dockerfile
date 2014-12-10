@@ -8,7 +8,7 @@ ADD Gemfile /app/Gemfile
 ADD Gemfile.lock /app/Gemfile.lock
 ADD vendor/cache /app/vendor/cache
 WORKDIR /app
-RUN bundle install --local
+RUN bundle install
 
 ADD . /app
 
