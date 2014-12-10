@@ -1,0 +1,5 @@
+<tr>
+<td><%= link_to "#{image.repo_tag.name}:#{image.repo_tag.tag}", image_path(CGI.escape(image.repo_tag.to_s))  %></td>
+<td><%= image.repo_tag %></td>
+<td><%= image.short_id %></td>
+</tr>
