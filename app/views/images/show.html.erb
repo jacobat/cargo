@@ -1,6 +1,15 @@
-<h1><%= params[:id] %></h1>
+<% content_for :sidebar do %>
+<%= render "sidebar" %>
+<% end %>
+<header>
+  <h1 class="page-header"><%= @image.short_id %></h1>
+</header>
+<div class="view active">
+
+</div>
+<!-- <h1><%= params[:id] %></h1>
 
 <dl>
   <dt>Created</dt>
   <dd><%= @image.created %></dd>
-</dl>
+</dl> -->

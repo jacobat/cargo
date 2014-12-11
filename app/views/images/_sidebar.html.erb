@@ -1,0 +1,15 @@
+<div class="pane containers">
+  <ul class="states">
+    <li><header><h2>All images</h2></header>
+      <ul id="running">
+        <% @images.each do |image| %>
+          <li class="<%= (@image && @image.short_id == image.short_id) ? "current" :  "" %>">
+            <div class="docker-container image">
+              <%= link_to "#{image.repo_tag.name}:#{image.repo_tag.tag}", image_path(image.short_id) %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </li>
+  </ul>
+</div>
