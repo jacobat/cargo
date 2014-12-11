@@ -2,7 +2,7 @@
   <h1 class="page-header"><%= @container.name %></h1>
   <!-- <p><%= link_to('Logs', container_log_path(@container.short_id)) %></p> -->
 
-  <a href="#infoview" class="view-btn" >View info</a><a href="#logsview" class="view-btn active">View logs</a>  
+  <a href="#infoview" class="view-btn" >View info</a><a href="#logsview" class="view-btn active">View logs</a>
 </header>
 
 
@@ -23,10 +23,12 @@
   </table>
 
   <div class="log-lines">
-    <% format_logs(@container.logs, params[:limit].to_i).each do |log_line| %>
-    <p><%= log_line %></p>
-    <% end %>
-  </div>
+    <pre>
+      <% format_logs(@container.logs, params[:limit].to_i).each do |log_line| %>
+<%= log_line %>
+      <% end %>
+    </div>
+  </pre>
 </div>
 <div class="view info">
   <pre class="pre-scrollable">
