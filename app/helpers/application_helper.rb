@@ -9,7 +9,7 @@ module ApplicationHelper
   def ansi_2_html(data)
     { 1 => :nothing,
       2 => :nothing,
-      4 => :nothing,
+      4 => :underline,
       5 => :nothing,
       7 => :nothing,
       30 => :black,
@@ -29,12 +29,17 @@ module ApplicationHelper
       47 => :nothing,
     }.each do |key, value|
       if value != :nothing
-        data.gsub!(/\e\[#{key}m/,"<span style=\"color:#{value}\">")
+        if value != :underline
+          data.gsub!(/\e\[#{key}m/,"<span style=\"color:#{value}\">")
+        else
+          data.gsub!(/\e\[#{key}m/,"<span style=\"text-decoration:#{value}\">")
+        end
       else
         data.gsub!(/\e\[#{key}m/,"<span>")
       end
     end
     data.gsub!(/\e\[0m/,'</span>')
+    data.gsub!(/\e\[24m/,'</span>')
     data.gsub!(/\e\[39m/,'</span>')
     return data
   end
