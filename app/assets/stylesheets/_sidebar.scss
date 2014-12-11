@@ -1,0 +1,74 @@
+.sidebar {
+  .states {
+    header {
+      @include column-header;
+    }
+    .active {
+      .docker-container {
+        display: block;
+      }
+    }
+  }
+  ul {
+    padding-left: 0;
+    li {
+      list-style: none;
+      ul {
+        opacity: 0;
+        overflow: hidden;
+        transition: all .5s;
+        margin-top: 15px;
+        li {
+          padding: 5px 0;
+          &.current {
+            background: whitesmoke;
+          }
+        }
+      }
+    }
+
+    &.ready ul {
+      opacity: 1;
+    }
+  }
+  .docker-container {
+    width: 100%;
+    position: relative;
+    height: 20px;
+    padding-left: 15px;
+
+    &::before {
+      content: "";
+      background: #444;
+      height: 80%;
+      width: 5px;
+      position: absolute;
+      top: 10%;
+      left: 0;
+      border-radius: 35px;
+    }
+
+    a {
+      color: black;
+      display: inline-block;
+      height: 100%;
+      line-height:20px;
+    }
+
+    &[data-state="running"]::before  {
+      background: #00CCCC;
+    }
+
+    &[data-state="restarting"]::before  {
+      background: #CCCC00;
+    }
+
+    &[data-state="off"]::before {
+      background: #efefef;
+    }
+
+    .label {
+      display: none;
+    }
+  }
+}

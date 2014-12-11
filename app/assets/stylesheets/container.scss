@@ -1,0 +1,64 @@
+.main {
+  header {
+    @include column-header;
+
+    a {
+      position: absolute;
+      bottom: 10px;
+      right: 0;
+      &.active {
+        display: none
+      }
+    }
+  }
+  .page-header {
+
+    color: black;
+    font-size: 1.3em;
+  }
+
+  #containerinfo {
+    margin: 0 auto;
+    font-size:1.05em;
+    height: 70px;
+    td {
+      padding: 0 10px;
+      span.name {
+        color: #bbb;
+      }
+      span.separator:last-child {
+        display:none;
+      }
+      &::after {
+        content:"/";
+        color: #bbb;
+        padding-left: 20px;
+      }
+    }
+  }
+  .log-lines {
+    background: #555;
+    padding: 10px;
+    height: calc(100% - 90px);
+    overflow-y: auto;
+    pre {
+      background: transparent;
+      color: whitesmoke;
+      border: none;
+    }
+  }
+
+  .pre-scrollable {
+    height: calc(100% - 20px);
+    max-height: none;
+    border-top: 0;
+  }
+
+  .view {
+    display: none;
+    height: calc(100% - 70px);
+    &.active {
+      display: block;
+    }
+  }
+}
