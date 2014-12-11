@@ -4,7 +4,7 @@ class ImagesController < ApplicationController
   end
 
   def show
+    @images = Host.new(DOCKER_ENDPOINT).images
     @image = Image.new(DOCKER_ENDPOINT, params[:id])
   end
 end
-

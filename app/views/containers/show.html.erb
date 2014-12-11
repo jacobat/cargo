@@ -1,10 +1,13 @@
+<% content_for :sidebar do %>
+  <%= render "sidebar" %>
+<% end %>
+
 <header>
   <h1 class="page-header"><%= @container.name %></h1>
   <!-- <p><%= link_to('Logs', container_log_path(@container.short_id)) %></p> -->
 
   <a href="#infoview" class="view-btn" >View info</a><a href="#logsview" class="view-btn active">View logs</a>
 </header>
-
 
 <div class="view log active">
   <table id="containerinfo">

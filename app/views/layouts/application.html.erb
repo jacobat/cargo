@@ -56,50 +56,7 @@
       </div> -->
       <div class="row">
         <div class="col-sm-2 sidebar">
-          <div class="pane containers">
-            <ul class="states">
-              <li><header><h2>Active containers</h2></header>
-                <ul id="running">
-                  <% @containers.each do |container| %>
-                    <% if container.state == "running" || container.state == "restarting" %>
-                      <li class="<%= (@container && @container.short_id == container.short_id) ? "current" :  "" %>">
-                        <div class="docker-container" data-state="<%= container.state %>">
-                          <%= link_to container.name, container_path(container.short_id) %> <% if container.running? %><span class="label label-success">Running</span><% end %>
-                        </div>
-                      </li>
-                    <% end %>
-                  <% end %>
-                </ul>
-              </li>
-              <li><header><h2>Paused</h2></header>
-                <ul id="paused">
-                  <% @containers.each do |container| %>
-                    <% if container.state == "pausing" %>
-                    <li class="<%= (@container && @container.short_id == container.short_id) ? "current" :  "" %>">
-                      <div class="docker-container" data-state="<%= container.state %>">
-                        <%= link_to container.name, container_path(container.short_id) %> <% if container.running? %><span class="label label-success">Running</span><% end %>
-                      </div>
-                    </li>
-                    <% end %>
-                  <% end %>
-                </ul>
-              </li>
-              <li><header><h2>Off</h2></header>
-                <ul id="off">
-                  <% @containers.each do |container| %>
-                    <% if container.state == "off" %>
-                    <li class="<%= (@container && @container.short_id == container.short_id) ? "current" :  "" %>">
-                      <div class="docker-container" data-state="<%= container.state %>">
-                        <%= link_to container.name, container_path(container.short_id) %> <% if container.running? %><span class="label label-success">Running</span><% end %>
-                      </div>
-                    </li>
-                    <% end %>
-                  <% end %>
-                </ul>
-              </li>
-            </ul>
-          </div>
-
+          <%= yield :sidebar %>
         </div>
         <div class="col-sm-10 main">
           <%= yield %>
