@@ -196,9 +196,13 @@ body > .container-fluid {
   .log-lines {
     background: #8A9999;
     padding: 10px;
-    color: whitesmoke;
     height: calc(100% - 90px);
     overflow-y: auto;
+    pre {
+      background: transparent;
+      color: whitesmoke;
+      border: none;
+    }
   }
 
   .pre-scrollable {
