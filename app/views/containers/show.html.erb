@@ -1,50 +1,44 @@
-<h1 class="page-header"><%= @container.name %></h1>
-<p><%= link_to('Logs', container_log_path(@container.short_id)) %></p>
-<table>
-  <tr>
-    <td>ID</td>
-    <td><%= @container.short_id %></td>
-  </tr>
-  <tr>
-    <td>Running</td>
-    <td><%= @container.running? %></td>
-  </tr>
-  <tr>
-    <td>Ports</td>
-    <td>
-      <table>
-        <tr>
-          <th>Internal</th>
-          <th>External</th>
-        </tr>
-        <% @container.ports.each do |internal, external| %>
-          <tr>
-            <td>
-              <%= internal %>
-            </td>
-            <td>
-              <% if external %>
-                <%= external.map{ |portspec| portspec.values.join(':') }.join(' ') %>
-              <% else %>
-                  -
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
-      </table>
-    </td>
-  </tr>
-</table>
+<header>
+  <h1 class="page-header"><%= @container.name %></h1>
+  <!-- <p><%= link_to('Logs', container_log_path(@container.short_id)) %></p> -->
 
-<pre class="pre-scrollable">
-<% @container.info.each do |key, value| %>
-<%= key %>:
-<% if value.kind_of?(Hash) %>
-<% value.each do |nested_key, nested_value| %>
-  <%= "#{nested_key}: #{nested_value}" %>
-<% end %>
-<% else %>
-  <%= value %>
-<% end %>
-<% end %>
-</pre>
+  <a href="#infoview" class="view-btn" >View info</a><a href="#logsview" class="view-btn active">View logs</a>  
+</header>
+
+
+<div class="view log active">
+  <table id="containerinfo">
+    <tr>
+      <td><span class="name">Status</span> <%= @container.state %></td>
+      <td><span class="name">ID</span> <%= @container.short_id %></td>
+      <td><span class="name">Ports</span>
+        <% @container.ports.each do |internal, external| %>
+        <%= internal.delete "/tcp" %> <span class="separator">/</span>
+        <% end %>
+      </td>
+      <td><span class="name">Image</span>
+        <%= @container.info["Config"]["Image"] %>
+      </td>
+    </tr>
+  </table>
+
+  <div class="log-lines">
+    <% format_logs(@container.logs, params[:limit].to_i).each do |log_line| %>
+    <p><%= log_line %></p>
+    <% end %>
+  </div>
+</div>
+<div class="view info">
+  <pre class="pre-scrollable">
+  <% @container.info.each do |key, value| %>
+  <%= key %>:
+  <% if value.kind_of?(Hash) %>
+  <% value.each do |nested_key, nested_value| %>
+    <%= "#{nested_key}: #{nested_value}" %>
+  <% end %>
+  <% else %>
+    <%= value %>
+  <% end %>
+  <% end %>
+  </pre>
+</div>
