@@ -7,21 +7,20 @@
 <div class="view active">
   <ul>
     <% @image.data.each do |data| %>
-    <li>
-
-      <% if data[0].include? "Config" %>
-      <span><%= data[0] %></span> : <span></span>
-      <ul>
-        <% data[1].each do |data| %>
-        <li><span><%= data[0] %></span> : <span><%= data[1] %></span></li>
+      <li>
+        <% if data[0].include? "Config" %>
+          <span><%= data[0] %></span> : <span></span>
+          <ul>
+            <% data[1].each do |data| %>
+              <li><span><%= data[0] %></span> : <span><%= data[1] %></span></li>
+            <% end %>
+          </ul>
+        <% else %>
+          <span><%= data[0] %></span> : <span><%= data[1] %></span>
         <% end %>
-      </ul>
-      <% else %>
-      <span><%= data[0] %></span> : <span><%= data[1] %></span>
-      <% end %>
-    </li>
-
-
+      </li>
     <% end %>
   </ul>
+</div
+
 </div>
