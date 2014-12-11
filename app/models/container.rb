@@ -13,6 +13,26 @@ class Container
     info['State']['Running']
   end
 
+  def restarting?
+    info['State']['Restarting']
+  end
+
+  def paused?
+    info['State']['Paused']
+  end
+
+  def state
+    if running?
+      "running"
+    elsif restarting?
+      "restarting"
+    elsif paused?
+      "paused"
+    else
+      "off"
+    end
+  end
+
   def short_id
     id[0,6]
   end
