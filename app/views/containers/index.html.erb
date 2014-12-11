@@ -1,9 +1,18 @@
-<h1>Containers</h1>
-<table>
-  <th>
-    <td>Name</td>
-    <td></td>
-  </th>
-  <%= render collection: @containers, partial: 'container' %>
-</table>
-
+<div class="dashboard">
+  <table class="overview">
+    <tr>
+      <td>
+        <h1><%= @containers.select { |container| container.state == "running" }.count %></h1>
+        <p> Running </p>
+      </td>
+      <td>
+        <h1><%= @containers.select { |container| container.state == "restarting" }.count %></h1>
+        <p> Starting... </p>
+      </td>
+      <td>
+        <h1><%= @containers.select { |container| container.state == "off" }.count %></h1>
+        <p> inactive </p>
+      </td>
+    </tr>
+  </table>
+</div>
