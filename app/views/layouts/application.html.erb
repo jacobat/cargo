@@ -44,6 +44,9 @@
           <a class="navbar-brand" href="#">Cargo</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
+
+          <a class="images <%= (params[:controller] == 'images')? 'active' : '' %>" href="/images/">Images</a>
+          <a class="containers <%= (params[:controller] == 'containers')? 'active' : '' %>" href="/containers/">Containers</a>
         </div>
       </div>
     </nav>
