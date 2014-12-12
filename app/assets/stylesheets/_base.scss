@@ -63,6 +63,30 @@ nav.navbar {
       }
     }
   }
+
+  #navbar {
+    text-align: center;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    margin: 0;
+    padding: 0;
+    left: 0;
+
+    a {
+      color: #aaa;
+      padding: 5px 15px;
+      font-size: 1.1em;
+      display: inline-block;
+
+
+      &.active {
+        color: #666;
+        border-bottom: 1px solid #00CCCC;
+
+      }
+    }
+  }
 }
 
 body > .container-fluid {
