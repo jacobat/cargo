@@ -6,3 +6,23 @@
   <p><%= log_line %></p>
 <% end %>
 </div>
+
+<%= content_for :javascript do %>
+  <script type="text/javascript">
+    var source = new EventSource('/container_logs/<%= @container.id %>');
+
+    source.addEventListener('results', function(e){
+      console.log('Received a message:', e.data);
+      $("#users").append("<li>"+ $.parseJSON(e.data).name +"</li>");
+    });
+
+    source.addEventListener('debug', function(e){
+      console.log('Received a debug:', e.data);
+    });
+
+    source.addEventListener('finished', function(e){
+      console.log('Close:', e.data);
+      source.close();
+    });
+  </script>
+<% end %>

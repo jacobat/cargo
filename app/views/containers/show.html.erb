@@ -25,14 +25,9 @@
     </tr>
   </table>
 
-  <div class="log-lines">
-    <pre>
-      <% format_logs(@container.logs, params[:limit].to_i).each do |log_line| %>
-<%= log_line %>
-      <% end %>
-    </div>
-  </pre>
+  <div class="log-lines"><pre></pre></div>
 </div>
+
 <div class="view info">
   <pre class="pre-scrollable">
   <% @container.info.each do |key, value| %>
@@ -47,3 +42,15 @@
   <% end %>
   </pre>
 </div>
+
+<%= content_for :javascript do %>
+  <script type="text/javascript">
+    var source = new EventSource('/container_logs/<%= @container.id %>');
+
+    source.addEventListener('log', function(e){
+      console.log('Received a log message:', e.data);
+      var data = $.parseJSON(e.data);
+      $(".log-lines pre")[0].innerHTML += data.line;
+    });
+  </script>
+<% end %>
