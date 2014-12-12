@@ -46,7 +46,7 @@ class Container
   end
 
   def info
-    @details ||= JSON.parse(request("containers/#{id}/json"))
+    @details ||= JSON.parse(request("containers/#{id}/json").body)
   end
 
   def logs
@@ -63,16 +63,51 @@ class Container
 
   def logs_for(options)
     query = options.map{|k,v| "#{k}=#{v}" }.join("&")
-    scan(request("containers/#{id}/logs?#{query}"))
+    response = request("containers/#{id}/logs?#{query}")
+    case response['Content-Type']
+    when 'application/octet-stream'
+      scan(response.body)
+    when 'text/plain; charset=utf-8'
+      response.body
+    else
+      raise "Unknown content type"
+    end
   end
 
   def scanned_logs
     scan(logs)
   end
 
+  def tunnel_logs
+    options = { stdout: 1, stderr: 1, follow: 1 }
+    query = options.map{|k,v| "#{k}=#{v}" }.join("&")
+    bytes_to_read = 0
+    buffer = ""
+    stream_request("containers/#{id}/logs?#{query}") do |response, chunk|
+      if response['Content-Type'] == 'text/plain; charset=utf-8'
+        yield chunk
+      else
+        if bytes_to_read < 0
+          raise "Something went wrong, bytes to read < 0"
+        end
+        if bytes_to_read == 0
+          bytes_to_read = chunk.unpack("C4L>").last
+        else
+          new_string = chunk.unpack('a*').join
+          buffer << new_string
+          bytes_to_read = bytes_to_read - new_string.length
+          if bytes_to_read == 0
+            yield buffer
+            buffer = ""
+          end
+        end
+      end
+    end
+  end
+
   def scan(binary_log)
     offset = 0
-    length = binary_log.unpack("a#{offset}C4L>").last
+    length = binary_log.unpack("C4L>").last
     output = ""
     while(length)
       output << binary_log.unpack("a#{offset}C4L>a#{length}").last
@@ -84,8 +119,20 @@ class Container
 
   private
 
+  def stream_request(path)
+    uri = URI.parse("#{endpoint}/#{path}")
+    Net::HTTP.start(uri.host, uri.port) do |http|
+      request = Net::HTTP::Get.new uri.request_uri
+      http.request request do |response|
+        response.read_body do |chunk|
+          yield [response.header, chunk]
+        end
+      end
+    end
+  end
+
   def request(path)
     uri = URI.parse("#{endpoint}/#{path}")
-    Net::HTTP.get_response(uri).body
+    Net::HTTP.get_response(uri)
   end
 end
