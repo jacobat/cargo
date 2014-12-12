@@ -46,11 +46,26 @@
 <%= content_for :javascript do %>
   <script type="text/javascript">
     var source = new EventSource('/container_logs/<%= @container.id %>');
+    var loglines = document.querySelector(".log-lines");
+    var currentTimeout = 0;
+    var log = "";
 
     source.addEventListener('log', function(e){
-      console.log('Received a log message:', e.data);
+      running = true;
+      clearTimeout(currentTimeout);
+      currentTimeout = setTimeout(function(){
+        updatePre();
+      }, 500);
       var data = $.parseJSON(e.data);
-      $(".log-lines pre")[0].innerHTML += data.line;
+      log += data.line;
     });
+
+    function updatePre() {
+      $(".log-lines pre")[0].innerHTML += ansi_up.ansi_to_html(log);
+      log = "";
+      loglines.scrollTop = loglines.scrollHeight;
+      clearTimeout(currentTimeout);
+    }
+
   </script>
 <% end %>
