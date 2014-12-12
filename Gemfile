@@ -17,6 +17,7 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'byebug'
 gem 'bootstrap-sass', '~> 3.3.1'
 gem 'ansi2html', require: 'ansi2html/main'
+gem 'puma'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 1.2'
