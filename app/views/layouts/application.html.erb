@@ -30,7 +30,7 @@
     <![endif]-->
   </head>
 
-  <body>
+  <body class="<%= params[:controller] %>">
 
     <nav class="navbar navbar-inverse" role="navigation">
       <div class="container-fluid">
@@ -52,7 +52,7 @@
     </nav>
 
     <div class="container-fluid">
-      
+
       <div class="row">
         <div class="col-sm-2 sidebar">
           <%= yield :sidebar %>
