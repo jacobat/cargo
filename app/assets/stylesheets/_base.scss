@@ -1,6 +1,7 @@
-@import url(http://fonts.googleapis.com/css?family=Advent+Pro:300);
+@import url(http://fonts.googleapis.com/css?family=Roboto:300);
 
 $header-height:100px;
+$display-font: 'Roboto', sans-serif;
 
 @mixin sidebar-container-visible {
   display: block;
@@ -53,7 +54,7 @@ nav.navbar {
       display: inline-block;
       text-transform: uppercase;
       margin-top: 15px;
-      font-family: 'Advent Pro', sans-serif;
+      font-family: $display-font;
       font-weight: lighter;
       letter-spacing: 2px;
       font-size: 2em;
